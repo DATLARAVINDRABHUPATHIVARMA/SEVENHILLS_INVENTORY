@@ -22,7 +22,7 @@ const Sidebar = () => {
       <div>
         <ul className="space-y-2 p-2">
           {menuItems.map((item) => {
-            <li key={item.name} className={({ isActive }) => ( isActive ? )}>
+            <li key={item.name} className={({ isActive }) => ( isActive )}>
               <NavLink >
                 <span>{item.icon}</span>
                 <span>{item.name}</span>

@@ -32,7 +32,7 @@ const Sidebar = () => {
         </ul>
       </div>
     </div>
-  ) 
+  )
 }
 
-export default Sidebar
+export default Sidebar;

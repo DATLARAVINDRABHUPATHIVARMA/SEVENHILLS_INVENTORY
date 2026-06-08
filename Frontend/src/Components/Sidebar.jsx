@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import { FaBox, FaCog, FaHome, FaLocationArrow, FaShoppingCart, FaSignOutAlt, FaTable, FaTruck, FaUsers } from 'react-icons/fa';
 import { NavLink } from 'react-router';
 

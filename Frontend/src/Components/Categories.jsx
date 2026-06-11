@@ -1,14 +1,23 @@
 import React, { useState } from 'react'
-import axios from 'axios';
+import axios from "axios";
 
 const Categories = () => {
   const[categoryName, setCategoryName] = useState("");
   const[categoryDescription, setCategoryDescription] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await axios.post("http://localhost:3000/api/category/add", { categoryName, categoryDescription }, { headers: { Authorization : `Bearer ${localStorage.getItem("token")}`}, })
-  []}
+
+    const response = await axios.post("http://localhost:3000/api/category/add", { categoryName, categoryDescription }, { headers: { Authorization : `Bearer ${localStorage.getItem("store-token")}`}, })
+    if (response.data.success) {
+      alert("Category added successfully!");
+      setCategoryName("");
+      setCategoryDescription("");
+    } else {
+      console.error("Error in adding category:", data);
+      alert("Error in adding category, Please try again!")
+    }
+  }
   
   return (
     <div className='p-4'>

@@ -10,9 +10,9 @@ const Categories = () => {
 
     const response = await axios.post("http://localhost:3000/api/category/add", { categoryName, categoryDescription }, { headers: { Authorization : `Bearer ${localStorage.getItem("store-token")}`}, })
     if (response.data.success) {
-      alert("Category added successfully!");
       setCategoryName("");
       setCategoryDescription("");
+      alert("Category added successfully!")
     } else {
       console.error("Error in adding category:", data);
       alert("Error in adding category, Please try again!")

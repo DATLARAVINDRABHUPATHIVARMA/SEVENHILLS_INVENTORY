@@ -35,6 +35,25 @@ const Categories = () => {
     setCategoryDescription(category.categoryDescription);
   }
 
+  const handleDelete = async (id) => {
+    const confirmDelete = window.confirm("Are you sure you want to delete this category?")
+    if (confirmDelete) {
+      try {
+        const response = await axios.delete(`http://localhost:3000/api/category/${id}`, { headers : { Authorization : `Bearer ${localStorage.getItem("store-token")}`}, })
+        if (response.data.success) {
+          alert("Category deleted successfully!")
+          fetchCategories();
+        } else {
+          console.error("Error in deleting category:", data);
+          alert("Error in deleting category, Please try again!")
+        }
+      } catch (error) {
+        console.error("Error deleting category", error);
+        alert("Error in deleting category, Please try again!")
+      }
+    }
+  }
+
   const handleCancel = () => {
     setEditCategory(null);
     setCategoryName("");
@@ -45,8 +64,10 @@ const Categories = () => {
     e.preventDefault();
     if (editCategory) { const response = await axios.put(`http://localhost:3000/api/category/${editCategory}`, { categoryName, categoryDescription }, { headers: { Authorization : `Bearer ${localStorage.getItem("store-token")}`}, })
       if (response.data.success) {
-        setEditCategory(null);
         alert("Category Updated successfully!")
+        setEditCategory(null);
+        setCategoryName("");
+        setCategoryDescription("");
         fetchCategories();
       } else {
         console.error("Error in updating category:", data);
@@ -79,7 +100,7 @@ const Categories = () => {
                 <input type="text" placeholder='Category Name' className='border w-full p-2 rounded-md' value={categoryName} onChange={(e) => setCategoryName(e.target.value)} />
               </div>
               <div>
-                <input type="text" placeholder='Category Description' className='border w-full p-2 rounded-md' value={categoryDescription} onChange={(e) => setCategoryDescription(e.target.value)} />
+                <textarea type="text" placeholder='Category Description' className='border w-full p-2 rounded-md' value={categoryDescription} onChange={(e) => setCategoryDescription(e.target.value)} rows={6} />
               </div>
               <div className='flex space-x-2'>
                 <button type="submit" className='w-full mt-2 rounded-md bg-green-500 text-white p-3 cursor-pointer hover:bg-green-600'>{editCategory ? "Update Changes" : "Add Category"}</button>
@@ -106,7 +127,7 @@ const Categories = () => {
                     <td className='border border-gray-200 p-2'>{category.categoryName}</td>
                     <td className='border border-gray-200 p-2'>
                       <button className="bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 mr-2" onClick={() => handleEdit(category)}>Edit</button>
-                      <button className="bg-red-500 text-white p-2 rounded-md hover:bg-red-600">Delete</button>
+                      <button className="bg-red-500 text-white p-2 rounded-md hover:bg-red-600" onClick={() => handleDelete(category._id)}>Delete</button>
                     </td>
                   </tr>
                 ))}

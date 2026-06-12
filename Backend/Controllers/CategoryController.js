@@ -11,7 +11,6 @@ const addCategory = async (req, res) => {
     }
 
     const newCategory = new CategoryModel({ categoryName, categoryDescription, });
-
     await newCategory.save();
     return res.status(201).json({ success: true, message: "Category added successfully" });
   } catch (error) {
@@ -20,4 +19,24 @@ const addCategory = async (req, res) => {
   }
 }
 
-export { addCategory }
+const getCategories = async (req, res) => {
+  try {
+    const categories = await CategoryModel.find();
+    return res.status(200).json({ success: true, categories });
+  } catch (error) {
+    console.error('Error in getting categories:', error);
+    return res.status(500).json({ success: false, message: "Server error in getting Categories" });
+  }
+}
+
+const updateCategory = async (req, res) => {
+  try {
+    
+  } catch (error) {
+  
+  }
+}
+
+
+
+export { addCategory, getCategories, updateCategory }

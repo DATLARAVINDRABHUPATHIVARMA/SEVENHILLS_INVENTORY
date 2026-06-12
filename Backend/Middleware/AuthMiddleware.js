@@ -14,8 +14,15 @@ const AuthMiddleware = async (req, res, next) => {
     }
 
     const user = User.findById({_id: decoded.id});
+    if (!user) {
+      return res.status(401).json({ success: false, message: 'User not found' }); 
+    }
+    req.user = user;
+    next();
 
-  } catch {
-    
+  } catch (error) {
+    return res.status(500).json({ success: false, message: 'Internal server error in Middleware' }); 
   }
 }
+
+export default AuthMiddleware;

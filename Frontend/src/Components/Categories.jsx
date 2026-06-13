@@ -5,6 +5,7 @@ const Categories = () => {
   const[categoryName, setCategoryName] = useState("");
   const[categoryDescription, setCategoryDescription] = useState("");
   const[categories, setCategories] = useState([]);
+  const[filteredCategories, setFilteredCategories] = useState([]);
   const[loading, setLoading] = useState(true);
   const[editCategory, setEditCategory] = useState(null)
 
@@ -18,6 +19,7 @@ const Categories = () => {
       });
       console.log(response.data.categories);
       setCategories(response.data.categories);
+      setFilteredCategories(response.data.categories);
       setLoading(false);
     } catch (error) {
       console.error("Error fetching categories", error);
@@ -34,6 +36,21 @@ const Categories = () => {
     setCategoryName(category.categoryName);
     setCategoryDescription(category.categoryDescription);
   }
+
+  const handleSearch = (e) => {
+    const searchTerm = e.target.value.toLowerCase().trim();
+    
+    if (!searchTerm) {
+      setFilteredCategories(categories);
+    } else {
+      const filtered = categories.filter((category) => 
+        ["categoryName", "categoryDescription"].some((key) => 
+          category[key]?.toString().toLowerCase().includes(searchTerm)
+        )
+      );
+      setFilteredCategories(filtered);
+    }
+  };
 
   const handleDelete = async (id) => {
     const confirmDelete = window.confirm("Are you sure you want to delete this category?")
@@ -91,6 +108,9 @@ const Categories = () => {
   return (
     <div className='p-4'>
       <h1 className='text-2xl font-bold mb-8'>Category Management</h1>
+      <div className='mb-6 flex justify-between items-center'>
+        <input  type="text"  placeholder="Search By Category Name / Description"  className="border p-2 bg-white rounded px-4 w-96" onChange={handleSearch} />
+      </div>
       <div className='flex flex-col lg:flex-row gap-4'>
         <div className='lg:w-1/3'>
           <div className='bg-white shadow-md rounded-lg p-4'>
@@ -117,22 +137,37 @@ const Categories = () => {
                 <tr className='bg-gray-100'>
                   <th className='border border-gray-200 p-2'>S.No</th>
                   <th className='border border-gray-200 p-2'>Category Name</th>
+                  <th className='border border-gray-200 p-2'>Description</th>
                   <th className='border border-gray-200 p-2'>Action</th>
                 </tr>
               </thead>
               <tbody>
-                {categories.map((category, index) => (
-                  <tr key={index}>
-                    <td className='border border-gray-200 p-2'>{index + 1}</td>
-                    <td className='border border-gray-200 p-2'>{category.categoryName}</td>
-                    <td className='border border-gray-200 p-2'>
-                      <button className="bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 mr-2" onClick={() => handleEdit(category)}>Edit</button>
-                      <button className="bg-red-500 text-white p-2 rounded-md hover:bg-red-600" onClick={() => handleDelete(category._id)}>Delete</button>
+                {filteredCategories.length === 0 ? (
+                  <tr>
+                    <td colSpan="4" className='text-center border border-gray-200 p-2'>
+                      No categories found
                     </td>
                   </tr>
-                ))}
+                ) : (
+                  filteredCategories.map((category, index) => (
+                    <tr key={category._id}>
+                      <td className='border border-gray-200 p-2'>{index + 1}</td>
+                      <td className='border border-gray-200 p-2'>{category.categoryName}</td>
+                      <td className='border border-gray-200 p-2'>{category.categoryDescription || '-'}</td>
+                      <td className='border border-gray-200 p-2'>
+                        <button className="bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 mr-2" onClick={() => handleEdit(category)}>Edit</button>
+                        <button className="bg-red-500 text-white p-2 rounded-md hover:bg-red-600" onClick={() => handleDelete(category._id)}>Delete</button>
+                      </td>
+                    </tr>
+                  ))
+                )}
               </tbody>
             </table>
+            {filteredCategories.length > 0 && filteredCategories.length !== categories.length && (
+              <div className="mt-4 text-sm text-gray-600">
+                Showing {filteredCategories.length} of {categories.length} categories
+              </div>
+            )}
           </div>
         </div>
       </div>

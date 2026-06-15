@@ -24,7 +24,7 @@ const Products = () => {
         <input type="text" placeholder="Search" className="border p-1 bg-white rounded px-4" />
         <button className='px-4 py-1.5 bg-blue-500 text-white rounded cursor-pointer hover:bg-blue-600' onClick={() => setOpenModel(true)}>Add New Product</button>
       </div>
-    </div>
+    </div>)
 
     { openModel && ( 
       <div className='fixed top-0 left-0 w-full h-full bg-black/50 flex justify-center items-center'>
@@ -58,7 +58,8 @@ const Products = () => {
         </div>
       </div>
     )}
-  )
+  
 }
+
 
 export default Products

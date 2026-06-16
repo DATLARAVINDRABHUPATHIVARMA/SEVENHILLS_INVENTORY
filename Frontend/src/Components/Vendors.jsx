@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 const Vendors = () => {
   const [addModel, setAddModel] = useState(false);
   const [editVendor, setEditVendor] = useState(null);
-  const [formData, setFormData] = useState({ vendorID: "", vendorName: "", vendorEmail: "", vendorPhone: "", vendorAddress: "", vendorDescription: "" })
+  const [formData, setFormData] = useState({ vendorID: "", vendorName: "", vendorEmail: "", vendorPhone: "", vendorGST: "", vendorAddress: "", vendorDescription: "" })
   const[loading, setLoading] = useState(false);
   const[vendors, setVendors] = useState([]);
   const[filteredVendors, setFilteredVendors] = useState([]);
@@ -61,7 +61,7 @@ const Vendors = () => {
         if (response.data.success) {
           alert("Vendor added successfully!")
           setAddModel(false);
-          setFormData({ vendorID: "", vendorName: "", vendorEmail: "", vendorPhone: "", vendorAddress: "", vendorDescription: "" })
+          setFormData({ vendorID: "", vendorName: "", vendorEmail: "", vendorPhone: "", vendorGST: "", vendorAddress: "", vendorDescription: "" })
         } else {
           console.error("Error in adding vendor:", data);
           alert("Error in adding vendor, Please try again!")
@@ -80,6 +80,7 @@ const Vendors = () => {
       vendorName: vendor.vendorName,
       vendorEmail: vendor.vendorEmail,
       vendorPhone: vendor.vendorPhone,
+      vendorGST: vendor.vendorGST,
       vendorAddress: vendor.vendorAddress,
       vendorDescription: vendor.vendorDescription,
     })
@@ -113,7 +114,7 @@ const Vendors = () => {
     setFilteredVendors(vendors);
   } else {
     const filtered = vendors.filter((vendor) => 
-      ["vendorID", "vendorName", "vendorEmail", "vendorPhone", "vendorAddress"].some((key) => 
+      ["vendorID", "vendorName", "vendorEmail", "vendorPhone", "vendorGST", "vendorAddress"].some((key) => 
         vendor[key]?.toString().toLowerCase().includes(searchTerm)
       )
     );
@@ -123,7 +124,7 @@ const Vendors = () => {
 
   const closeModel = () => {
     setAddModel(false);
-    setFormData({ vendorID: "", vendorName: "", vendorEmail: "", vendorPhone: "", vendorAddress: "", vendorDescription: "" })
+    setFormData({ vendorID: "", vendorName: "", vendorEmail: "", vendorPhone: "", vendorGST: "", vendorAddress: "", vendorDescription: "" })
     setEditVendor(null);
   }
 
@@ -144,6 +145,7 @@ const Vendors = () => {
               <th className='border border-gray-300 p-2'>Vendor Name</th>
               <th className='border border-gray-300 p-2'>Email</th>
               <th className='border border-gray-300 p-2'>Phone</th>
+              <th className='border border-gray-300 p-2'>GST</th>
               <th className='border border-gray-300 p-2'>Address</th>
               <th className='border border-gray-300 p-2'>Action</th>
             </tr>
@@ -156,6 +158,7 @@ const Vendors = () => {
                 <td className='border border-gray-300 p-2'>{vendor.vendorName}</td>
                 <td className='border border-gray-300 p-2'>{vendor.vendorEmail}</td>
                 <td className='border border-gray-300 p-2'>{vendor.vendorPhone}</td>
+                <td className='border border-gray-300 p-2'>{vendor.vendorGST}</td>
                 <td className='border border-gray-300 p-2'>{vendor.vendorAddress}</td>
                 <td className='border border-gray-300 p-2'>
                   <button className='px-2 py-1 bg-yellow-500 text-white rounded cursor-pointer hover:bg-yellow-600 mr-2' onClick={() => handleEdit(vendor)}>Edit</button>
@@ -179,6 +182,7 @@ const Vendors = () => {
               <input type="text" name="vendorName" value={formData.vendorName} onChange={handleChange} placeholder="Vendor Name" className="border p-1 bg-white rounded px-4"/>
               <input type="email" name="vendorEmail" value={formData.vendorEmail} onChange={handleChange} placeholder="Vendor Email" className="border p-1 bg-white rounded px-4"/>
               <input type="number" name="vendorPhone" value={formData.vendorPhone} onChange={handleChange} placeholder="Vendor Phone" className="border p-1 bg-white rounded px-4"/>
+              <input type="text" name="vendorGST" value={formData.vendorGST} onChange={handleChange} placeholder="Vendor GST" className="border p-1 bg-white rounded px-4"/>
               <textarea rows={4} type="text" name="vendorAddress" value={formData.vendorAddress} onChange={handleChange} placeholder="Vendor Address" className="border p-1 bg-white rounded px-4"/>
               <textarea rows={5} type="text" name="vendorDescription" value={formData.vendorDescription} onChange={handleChange} placeholder="Vendor Description" className="border p-1 bg-white rounded px-4"/>
               <div className='flex space-x-2'>

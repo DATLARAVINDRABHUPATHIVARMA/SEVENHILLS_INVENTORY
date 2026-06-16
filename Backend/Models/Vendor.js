@@ -5,6 +5,7 @@ const vendorSchema = new mongoose.Schema({
   vendorName: { type: String, required: true},
   vendorEmail: { type: String, required: true},
   vendorPhone: { type: String, required: true},
+  vendorGST: { type: String, required: true},
   vendorAddress: { type: String, required: true},
   vendorDescription: { type: String, required: true},
 })

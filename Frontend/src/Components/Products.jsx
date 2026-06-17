@@ -51,7 +51,7 @@ const Products = () => {
           </div>
           <div className='flex space-x-2'>
             <button type="submit" className='w-full mt-2 rounded-md bg-green-500 text-white p-3 cursor-pointer hover:bg-green-600'>{editVendor ? "Update Product" : "Add Product"}</button>
-            {editVendor && (<button type="button" className="w-full mt-2 rounded-md bg-red-500 text-white p-3 cursor-pointer hover:bg-red-600" onClick={closeModel}>Cancel</button>)}
+            { editVendor && (<button type="button" className="w-full mt-2 rounded-md bg-red-500 text-white p-3 cursor-pointer hover:bg-red-600" onClick={closeModel}>Cancel</button>) }
           </div>
         </form>
       </div>

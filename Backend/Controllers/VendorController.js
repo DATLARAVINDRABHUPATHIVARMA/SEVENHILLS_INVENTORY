@@ -32,7 +32,7 @@ const getVendors = async (req, res) => {
 const updateVendor = async (req, res) => {
   try {
     const {id} = req.params;
-    const { vendorID, vendorName, vendorEmail, vendorPhone, vendorGST, vendorAddress, vendorDescription } = req.body;
+    const { vendorID, vendorName, vendorEmail, vendorPhone, vendorGST, vendorAddress, vendorDescription} = req.body;
 
     const existingVendor = await Vendor.findById(id);
     if (!existingVendor) { 

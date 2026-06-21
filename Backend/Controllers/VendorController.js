@@ -57,7 +57,6 @@ const deleteVendor = async (req, res) => {
     }
     await Vendor.findByIdAndDelete(id);
     return res.status(200).json({ success: true, message: "Vendor deleted successfully" });
-
   } catch (error) {
     console.error('Error in deleting vendor:', error);
     return res.status(500).json({ success: false, message: "Server error in deleting Vendor" });

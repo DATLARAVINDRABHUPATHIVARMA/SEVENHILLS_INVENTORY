@@ -57,7 +57,7 @@ const Vendors = () => {
       }
       fetchVendors()
     } else {
-      try { const response = await axios.post("http://localhost:3000/api/vendor/add", formData, { headers: { Authorization : `Bearer ${localStorage.getItem("store-token")}`}, })
+      try { const response = await axios.post("http://localhost:3000/api/vendor/add", formData, {headers: { Authorization : `Bearer ${localStorage.getItem("store-token")}`},})
         if (response.data.success) {
           alert("Vendor added successfully!")
           setAddModel(false);

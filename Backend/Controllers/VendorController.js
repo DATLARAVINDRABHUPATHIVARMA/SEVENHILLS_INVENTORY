@@ -63,5 +63,4 @@ const deleteVendor = async (req, res) => {
   }
 }
 
-
 export { addVendor, getVendors, updateVendor, deleteVendor }

@@ -4,6 +4,7 @@ import ConnectDB from './DB/Connection.js';
 import authRouter from "./Routes/auth.js";
 import CategoryRouter from './Routes/category.js';
 import VendorRouter from './Routes/vendor.js';
+import ProductRouter from './Routes/product.js'
 
 const app = express();
 app.use(cors());
@@ -12,6 +13,7 @@ ConnectDB();
 app.use("/api/auth", authRouter);
 app.use("/api/category", CategoryRouter);
 app.use("/api/vendor", VendorRouter);
+app.use("/api/product", ProductRouter);
 
 app.listen(process.env.PORT, () => {
   console.log(`Server is running on port ${process.env.PORT}`);

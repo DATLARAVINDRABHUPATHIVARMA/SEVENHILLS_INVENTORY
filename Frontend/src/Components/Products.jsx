@@ -1,3 +1,4 @@
+import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 
 const Products = () => {
@@ -5,10 +6,12 @@ const Products = () => {
   const [vendors, setVendors] = useState([])
   const [categories, setCategories] = useState([])
 
-  fetchProducts = async () => {
+  const fetchProducts = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/api/products", { headers : { Authorization : `Bearer ${localStorage.getItem("store-token")}`}, 
-    })} catch (error) {
+      const response = await axios.get("http://localhost:3000/api/products", { headers : { Authorization : `Bearer ${localStorage.getItem("store-token")}`}, })
+      setCategories(response.data.categories);
+      setVendors(response.data.vendors);
+    } catch (error) {
       console.error("Error fetching products", error);
     }
   }
@@ -33,12 +36,10 @@ const Products = () => {
         <h1 className='font-bold text-xl'>Add Product</h1>
         <button className='absolute top-4 right-4 font-bold text-lg cursor-pointer' onClick={() => setOpenModel(false)}>X</button>
         <form className='flex flex-col gap-4 mt-4'>
-          <input type="text" name="vendorID" placeholder="Vendor ID" className="border p-1 bg-white rounded px-4"/>
-          <input type="text" name="vendorName" placeholder="Vendor Name" className="border p-1 bg-white rounded px-4"/>
-          <input type="email" name="vendorEmail" placeholder="Vendor Email" className="border p-1 bg-white rounded px-4"/>
-          <input type="number" name="vendorPhone" placeholder="Vendor Phone" className="border p-1 bg-white rounded px-4"/>
-          <textarea rows={4} type="text" name="vendorAddress" placeholder="Vendor Address" className="border p-1 bg-white rounded px-4"/>
-          <textarea rows={5} type="text" name="vendorDescription" placeholder="Vendor Description" className="border p-1 bg-white rounded px-4"/>
+          <input type="text" name="productName" placeholder="Product Name" className="border p-1 bg-white rounded px-4"/>
+          <input type="number" name="productPrice" placeholder="Enter the Price" className="border p-1 bg-white rounded px-4"/>
+          <input type="number" name="stock" placeholder="Enter Stock" className="border p-1 bg-white rounded px-4"/>
+          <textarea rows={5} type="text" name="productDescription" placeholder="Product Description" className="border p-1 bg-white rounded px-4"/>
           <div>
             <select name='category'>
               <option value="">Select Category</option>

@@ -43,22 +43,23 @@ const Products = () => {
           <div>
             <select name='category'>
               <option value="">Select Category</option>
+              { categories && categories.map((category) => ( <option key={category._id} value={category._id}>{category.categoryName}</option> ))}
             </select>
           </div>
           <div>
             <select name="vendor">
               <option value="">Select Vendor</option>
+              { vendors && vendors.map((vendor) => ( <option key={vendor._id} value={vendor._id}>{vendor.vendorID} - {vendor.vendorName}</option> ))}
             </select>
           </div>
           <div className='flex space-x-2'>
-            <button type="submit" className='w-full mt-2 rounded-md bg-green-500 text-white p-3 cursor-pointer hover:bg-green-600'>{editVendor ? "Update Product" : "Add Product"}</button>
-            { editVendor && (<button type="button" className="w-full mt-2 rounded-md bg-red-500 text-white p-3 cursor-pointer hover:bg-red-600" onClick={closeModel}>Cancel</button>) }
+            <button type="submit" className='w-full mt-2 rounded-md bg-green-500 text-white p-3 cursor-pointer hover:bg-green-600' >Add Product</button>
+            <button type="button" className="w-full mt-2 rounded-md bg-red-500 text-white p-3 cursor-pointer hover:bg-red-600" onClick={() => setOpenModel(false)}>Cancel</button>
           </div>
         </form>
       </div>
     </div>
   )}
 }
-
 
 export default Products
